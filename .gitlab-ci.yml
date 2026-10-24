@@ -1,0 +1,94 @@
+# GreenOps Transcend Duo — 9-Stage Post-Code Autonomous DevSecOps & GreenOps Pipeline
+# Executes all 9 official GitLab DevSecOps stages and produces verifiable JSON/Markdown artifacts.
+
+image: python:3.11-slim
+
+stages:
+  - plan
+  - create
+  - verify
+  - package
+  - secure
+  - release
+  - configure
+  - monitor
+  - govern
+
+variables:
+  PYTHONPATH: "."
+  GCP_TARGET_REGION: "europe-north1"
+
+stage_1_plan:
+  stage: plan
+  script:
+    - python scripts/run_9stage_pipeline.py --stage plan
+  artifacts:
+    paths:
+      - artifacts/stage_1_plan.json
+
+stage_2_create:
+  stage: create
+  script:
+    - python scripts/run_9stage_pipeline.py --stage create
+  artifacts:
+    paths:
+      - artifacts/stage_2_create.json
+
+stage_3_verify:
+  stage: verify
+  script:
+    - pip install --no-cache-dir -r requirements.txt
+    - python -m pytest tests/test_transcend_duo.py -v
+    - python scripts/run_9stage_pipeline.py --stage verify
+  artifacts:
+    paths:
+      - artifacts/stage_3_verify.json
+
+stage_4_package:
+  stage: package
+  script:
+    - python scripts/run_9stage_pipeline.py --stage package
+  artifacts:
+    paths:
+      - artifacts/stage_4_package_gbom.json
+
+stage_5_secure:
+  stage: secure
+  script:
+    - python scripts/run_9stage_pipeline.py --stage secure
+  artifacts:
+    paths:
+      - artifacts/stage_5_secure_sast.json
+
+stage_6_release:
+  stage: release
+  script:
+    - python scripts/run_9stage_pipeline.py --stage release
+  artifacts:
+    paths:
+      - artifacts/stage_6_release.json
+
+stage_7_configure:
+  stage: configure
+  script:
+    - python scripts/run_9stage_pipeline.py --stage configure
+  artifacts:
+    paths:
+      - artifacts/stage_7_configure_gcp.json
+
+stage_8_monitor:
+  stage: monitor
+  script:
+    - python scripts/run_9stage_pipeline.py --stage monitor
+  artifacts:
+    paths:
+      - artifacts/stage_8_monitor_sci.json
+
+stage_9_govern:
+  stage: govern
+  script:
+    - python scripts/run_9stage_pipeline.py --stage govern
+  artifacts:
+    paths:
+      - artifacts/stage_9_govern_attestation.json
+      - artifacts/GREENOPS_TRANSCEND_REPORT.md

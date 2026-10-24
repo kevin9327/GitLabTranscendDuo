@@ -1,0 +1,15 @@
+# Official GitLab Duo Agent Platform Runtime Configuration
+# Schema: https://docs.gitlab.com/user/duo_agent_platform/flows/execution/agent-config-yaml/
+image: python:3.11-slim
+
+setup_script:
+  - apt-get update && apt-get install -y --no-install-recommends curl ca-certificates git
+  - pip install --no-cache-dir -r requirements.txt
+
+network_policy:
+  include_recommended_allowed: true
+  allowed_domains:
+    - gitlab.com
+    - registry.gitlab.com
+    - run.googleapis.com
+    - cloudresourcemanager.googleapis.com

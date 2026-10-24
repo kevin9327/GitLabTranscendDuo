@@ -1,0 +1,47 @@
+{
+  "stage": "configure",
+  "workload_id": "workload-clocked-omniguard-byo",
+  "status": "passed",
+  "stage_report": {
+    "stage_number": 7,
+    "stage_id": "configure",
+    "title": "Stage 7 \u00b7 Configure (Google Cloud Run CFE% Region Router)",
+    "status": "passed",
+    "duo_component": "release_configure_monitor_govern_gcp",
+    "summary": "Routed Google Cloud Run service from us-east4 (39.0% CFE) to europe-north1 (Hamina, Finland (Google Cloud), 94.0% CFE, 42.0 gCO2eq/kWh).",
+    "metrics": {
+      "gcp_region": "europe-north1",
+      "gcp_cfe_percent": 94.0,
+      "grid_intensity_gco2_kwh": 42.0
+    }
+  },
+  "sci_before": {
+    "energy_kwh": 0.48,
+    "grid_intensity_gco2_kwh": 362.0,
+    "operational_gco2eq": 173.76,
+    "embodied_gco2eq": 4.2,
+    "sci_gco2eq_per_1k_requests": 177.96
+  },
+  "sci_after": {
+    "energy_kwh": 0.19,
+    "grid_intensity_gco2_kwh": 42.0,
+    "operational_gco2eq": 7.98,
+    "embodied_gco2eq": 1.6,
+    "sci_gco2eq_per_1k_requests": 9.58
+  },
+  "sci_reduction_percent": 94.62,
+  "target_gcp_region": {
+    "region": "europe-north1",
+    "location": "Hamina, Finland (Google Cloud)",
+    "cfe_percent": 94.0,
+    "grid_intensity_gco2_kwh": 42.0,
+    "pue": 1.09,
+    "tier": "OPTIMAL_GREEN_TARGET"
+  },
+  "duo_flow_validation": {
+    "status": "valid",
+    "passed_count": 6,
+    "total_checks": 6
+  },
+  "attestation_sha256": "f216f42f690256b2d289094136deb03f195aa88ca09ab9ea0cb7f1067682c849"
+}

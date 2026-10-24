@@ -1,0 +1,147 @@
+# Official GitLab Duo Agent Platform — Flow Registry Framework v1
+# Covers all 9 DevSecOps Stages (plan, create, verify, package, secure, release, configure, monitor, govern)
+# + GreenOps SCI Carbon Intensity Optimization & Google Cloud CFE Region Routing
+version: "v1"
+environment: ambient
+
+components:
+  - name: plan_and_create_carbon_budget
+    type: AgentComponent
+    prompt_id: plan_create_prompt
+    inputs:
+      - from: context:goal
+        as: goal
+      - from: context:project_id
+        as: project_id
+      - from: context:inputs.agent_platform_standard_context.primary_branch
+        as: primary_branch
+      - from: context:inputs.user_rule
+        as: agents_dot_md
+        optional: true
+    toolset:
+      - get_issue
+      - get_merge_request
+      - create_issue_note
+      - read_file
+      - list_dir
+      - gitlab_api_get
+    ui_log_events:
+      - on_agent_final_answer
+      - on_tool_execution_success
+      - on_tool_execution_failed
+
+  - name: verify_package_secure_gate
+    type: AgentComponent
+    prompt_id: verify_secure_prompt
+    inputs:
+      - from: context:goal
+        as: goal
+      - from: context:project_id
+        as: project_id
+    toolset:
+      - read_file
+      - edit_file
+      - create_commit
+      - get_merge_request
+      - create_issue_note
+      - run_command
+    ui_log_events:
+      - on_agent_final_answer
+      - on_tool_execution_success
+
+  - name: release_configure_monitor_govern_gcp
+    type: AgentComponent
+    prompt_id: govern_gcp_prompt
+    inputs:
+      - from: context:goal
+        as: goal
+      - from: context:project_id
+        as: project_id
+    toolset:
+      - gitlab_api_get
+      - get_merge_request
+      - create_issue_note
+      - run_command
+    ui_log_events:
+      - on_agent_final_answer
+      - on_tool_execution_success
+
+routers:
+  - from: plan_and_create_carbon_budget
+    condition:
+      input: context:plan_and_create_carbon_budget.final_answer
+      routes:
+        stop: end
+        default_route: verify_package_secure_gate
+  - from: verify_package_secure_gate
+    condition:
+      input: context:verify_package_secure_gate.final_answer
+      routes:
+        stop: end
+        default_route: release_configure_monitor_govern_gcp
+  - from: release_configure_monitor_govern_gcp
+    to: end
+
+flow:
+  entry_point: plan_and_create_carbon_budget
+  inputs:
+    - category: agent_platform_standard_context
+      input_schema:
+        primary_branch:
+          type: string
+          description: Default branch of the repository
+        workload_branch:
+          type: string
+          description: Git ref used by the CI workload
+        session_owner_id:
+          type: string
+          description: ID of the human who started the flow
+
+prompts:
+  - prompt_id: plan_create_prompt
+    name: "Stages 1-2: Plan & Create GreenOps Carbon Budget"
+    unit_primitives: []
+    prompt_template:
+      system: |
+        You are the Plan & Create stage agent of GreenOps Transcend Duo.
+        Calculate the Green Software Foundation SCI score: SCI = ((E * I) + M) / R.
+        Audit incoming Merge Request diffs for N+1 queries, oversized container layers, and GPU/CPU waste.
+        Reply with continue or stop.
+      user: |
+        Project ID: {{ project_id }}
+        Primary branch: {{ primary_branch }}
+        Goal: {{ goal }}
+        Instructions: {{ agents_dot_md }}
+      placeholder: history
+    params:
+      timeout: 180
+
+  - prompt_id: verify_secure_prompt
+    name: "Stages 3-5: Verify, Package & Secure (GBOM + SAST)"
+    unit_primitives: []
+    prompt_template:
+      system: |
+        You are the Verify, Package, and Secure stage agent of GreenOps Transcend Duo.
+        Execute unit/regression tests, right-size OCI container layers (distroless/slim), verify zero leaked secrets/CVEs, and generate the signed Green Bill of Materials (GBOM).
+        Reply with continue or stop.
+      user: |
+        Project ID: {{ project_id }}
+        Goal: {{ goal }}
+      placeholder: history
+    params:
+      timeout: 240
+
+  - prompt_id: govern_gcp_prompt
+    name: "Stages 6-9: Release, Configure, Monitor & Govern on Google Cloud Run"
+    unit_primitives: []
+    prompt_template:
+      system: |
+        You are the Release, Configure, Monitor, and Govern stage agent of GreenOps Transcend Duo.
+        Route deployment to the highest Carbon-Free Energy (CFE%) Google Cloud Run region (europe-north1 at 94% CFE), configure K8s/Cloud Run autoscaling to zero idle instances, monitor live SLO telemetry, and publish the cryptographic SHA-256 Governance Attestation.
+        Reply with stop.
+      user: |
+        Project ID: {{ project_id }}
+        Goal: {{ goal }}
+      placeholder: history
+    params:
+      timeout: 240

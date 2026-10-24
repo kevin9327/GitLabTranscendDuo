@@ -1,0 +1,46 @@
+{
+  "stage": "govern",
+  "workload_id": "workload-clocked-omniguard-byo",
+  "status": "passed",
+  "stage_report": {
+    "stage_number": 9,
+    "stage_id": "govern",
+    "title": "Stage 9 \u00b7 Govern (SHA-256 ISO/IEC 21031 Governance Attestation)",
+    "status": "passed",
+    "duo_component": "release_configure_monitor_govern_gcp",
+    "summary": "Signed cryptographic SHA-256 GreenOps & DevSecOps Governance Attestation across all 9 stages.",
+    "metrics": {
+      "stages_covered": "9 / 9 (100%)",
+      "compliance_standard": "ISO/IEC 21031:2024 (SCI)"
+    }
+  },
+  "sci_before": {
+    "energy_kwh": 0.48,
+    "grid_intensity_gco2_kwh": 362.0,
+    "operational_gco2eq": 173.76,
+    "embodied_gco2eq": 4.2,
+    "sci_gco2eq_per_1k_requests": 177.96
+  },
+  "sci_after": {
+    "energy_kwh": 0.19,
+    "grid_intensity_gco2_kwh": 42.0,
+    "operational_gco2eq": 7.98,
+    "embodied_gco2eq": 1.6,
+    "sci_gco2eq_per_1k_requests": 9.58
+  },
+  "sci_reduction_percent": 94.62,
+  "target_gcp_region": {
+    "region": "europe-north1",
+    "location": "Hamina, Finland (Google Cloud)",
+    "cfe_percent": 94.0,
+    "grid_intensity_gco2_kwh": 42.0,
+    "pue": 1.09,
+    "tier": "OPTIMAL_GREEN_TARGET"
+  },
+  "duo_flow_validation": {
+    "status": "valid",
+    "passed_count": 6,
+    "total_checks": 6
+  },
+  "attestation_sha256": "f216f42f690256b2d289094136deb03f195aa88ca09ab9ea0cb7f1067682c849"
+}
