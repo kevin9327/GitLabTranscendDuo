@@ -101,6 +101,11 @@ prompts:
   - prompt_id: plan_create_prompt
     name: "Stages 1-2: Plan & Create GreenOps Carbon Budget"
     unit_primitives: []
+    model:
+      params:
+        model_class_provider: anthropic
+        model: claude-sonnet-4-20250514
+        max_tokens: 4096
     prompt_template:
       system: |
         You are the Plan & Create stage agent of GreenOps Transcend Duo.
@@ -119,6 +124,11 @@ prompts:
   - prompt_id: verify_secure_prompt
     name: "Stages 3-5: Verify, Package & Secure (GBOM + SAST)"
     unit_primitives: []
+    model:
+      params:
+        model_class_provider: anthropic
+        model: claude-sonnet-4-20250514
+        max_tokens: 4096
     prompt_template:
       system: |
         You are the Verify, Package, and Secure stage agent of GreenOps Transcend Duo.
@@ -134,6 +144,11 @@ prompts:
   - prompt_id: govern_gcp_prompt
     name: "Stages 6-9: Release, Configure, Monitor & Govern on Google Cloud Run"
     unit_primitives: []
+    model:
+      params:
+        model_class_provider: anthropic
+        model: claude-sonnet-4-20250514
+        max_tokens: 4096
     prompt_template:
       system: |
         You are the Release, Configure, Monitor, and Govern stage agent of GreenOps Transcend Duo.

@@ -13,3 +13,5 @@ network_policy:
     - registry.gitlab.com
     - run.googleapis.com
     - cloudresourcemanager.googleapis.com
+    - aiplatform.googleapis.com
+    - api.anthropic.com
